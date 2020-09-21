@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: desk
+
+  application:
+    name: skeleton_api
+
+  datasource:
+    initialization-mode: never
+    sql-script-encoding: UTF-8
+    hikari:
+      pool-name: hikari-cp
+      maximum-pool-size: 30
+      minimum-idle: 2
+      data-source-properties:
+        cache-prep-stmts: true
+        prep-stmt-cache-size: 250
+        prep-stmt-cache-sql-limit: 2048
+        use-server-prep-stmts: true
+      connection-test-query: SELECT 1
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    default-fetch-size: 100
+    default-statement-timeout: 30
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: NULL
+    call-setters-on-nulls: true
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:log4jdbc:mysql://192.168.23.128:3306/dev?autoReconnect=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: devtest
+    password: devtest123
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+---
+spring:
+  profiles: desk
+  datasource:
+    url: jdbc:log4jdbc:mysql://192.168.136.128:3306/dev?autoReconnect=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: devtest
+    password: devtest123
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jg.toy.springreact.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.jg.toy.springreact.model.User">
+        <id column="user_no" jdbcType="INTEGER" property="userNo" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="user_type" jdbcType="VARCHAR" property="userType" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+
+    <sql id="User_Column_List">
+    user_no, user_id, user_type, user_name, pwd, `status`, create_date, update_date
+  </sql>
+
+    <sql id="User_Search_Condition">
+        <trim prefix = "WHERE" prefixOverrides="AND">
+            <if test="userNo != null and userNo != 0">
+                AND user_no = #{userNo,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null">
+                AND user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                AND user_type = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                AND user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                AND status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null and createDate != null">
+                and create_date >= #{createDate} AND #{createDate} >= create_date
+            </if>
+            <if test="updateDate != null and updateDate != null">
+                and update_date >= #{updateDate} AND #{updateDate} >= update_date
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectUsers" parameterType="com.jg.toy.springreact.model.UserSearchParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="User_Column_List" />
+        FROM user
+        <include refid="User_Search_Condition" />
+        ORDER BY user_no DESC
+        <if test="page != null and pageSize != null">
+            limit ${(page > 0 ? page -1 : 0) * pageSize}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="selectUsersCnt" parameterType="com.jg.toy.springreact.model.UserSearchParam" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM user
+        <include refid="User_Search_Condition" />
+        ORDER BY user_no DESC
+    </select>
+
+    <select id="selectBySelective" parameterType="com.jg.toy.springreact.model.UserSearchParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="User_Column_List" />
+        FROM user
+        <include refid="User_Search_Condition" />
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="com.jg.toy.springreact.model.User" resultMap="BaseResultMap">
+        SELECT
+        <include refid="User_Column_List" />
+        FROM user
+        WHERE user_no = #{userNo,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    DELETE FROM user
+    WHERE user_no = #{userNo,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insertSelective" keyColumn="user_no" keyProperty="userNo" parameterType="com.jg.toy.springreact.model.User" useGeneratedKeys="true">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="pwd != null">
+                pwd,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jg.toy.springreact.model.User">
+        UPDATE user
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                pwd = #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_no = #{userNo,jdbcType=INTEGER}
+    </update>
+
+</mapper>
