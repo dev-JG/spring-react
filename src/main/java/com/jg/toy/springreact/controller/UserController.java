@@ -16,7 +16,7 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/dev")
+@RequestMapping("api/v1/user")
 public class UserController {
 
     private final UserService userService;
@@ -26,7 +26,7 @@ public class UserController {
         return "index page";
     }
 
-    @GetMapping("user")
+    @GetMapping("list")
     public List<User> getUser(){
         return userService.getUserList();
     }

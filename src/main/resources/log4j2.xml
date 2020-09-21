@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+    <Properties>
+    	<!-- [%c{1}.%M]:  -->
+        <Property name="LOG_FORMAT">[%p] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %M : %m%n</Property>
+        <Property name="BASE_DIR">/jg_dev/log/jg_dev</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+        </Console>
+        <RollingFile name="File" fileName="${BASE_DIR}/jg_dev.log" filePattern="${BASE_DIR}/jg_dev.%d{yyyyMMdd}.log">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${BASE_DIR}">
+                    <IfFileName glob="*.log" />
+                    <IfLastModified age="30d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+    	<logger name="jdbc" level="off"/>
+    	<logger name="jdbc.sqlonly" level="off"/>
+    	<logger name="jdbc.sqltiming" level="info"/>
+    	<logger name="jdbc.audit" level="off"/>
+    	<logger name="jdbc.resultset" level="off"/>
+    	<logger name="jdbc.resultsettable" level="info"/>
+    	<logger name="jdbc.connection" level="off"/>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File" />
+        </Root>
+    </Loggers>
+</Configuration>
