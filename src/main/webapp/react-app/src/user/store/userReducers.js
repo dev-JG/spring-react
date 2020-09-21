@@ -1,8 +1,10 @@
 // 액션 타입 정의
-const INCREMENT = 'counter/INCREMENT' ;
+const INCREMENT = "INCREMENT";
 
 // 액션 생성 함수 정의
-export const increment = () => ({ type: INCREMENT }) ;
+export const increment = () => ({
+    type: INCREMENT
+});
 
 // 초기 상태 정의
 const initialState = {

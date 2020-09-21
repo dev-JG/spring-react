@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
-import MainComponent from './user/component/MainComponent'
-import DashboardComponent from './user/component/DashboardComponent'
+import userMainComponent from './user/component/UserMainComponent'
 
 /** 라우터 **/
 class router extends Component {
@@ -10,8 +9,7 @@ class router extends Component {
         return (
             <Router>
                 <Route path="/" />
-                <Route path="/main" component={MainComponent} />
-                <Route path="/dashboard" component={DashboardComponent} />
+                <Route path="/user" component={userMainComponent} />
             </Router>
         )
     }

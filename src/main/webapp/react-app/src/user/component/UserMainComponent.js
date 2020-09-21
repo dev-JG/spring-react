@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 
-class DashboardComponent extends Component {
+class UserMainComponent extends Component {
     render() {
         return(
             <div>
-                Dashboard 페이지
+                Main 페이지
             </div>
         )
     }
 }
 
-export default DashboardComponent
+export default UserMainComponent
