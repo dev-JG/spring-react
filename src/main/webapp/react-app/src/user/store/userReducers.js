@@ -1,26 +1,21 @@
-// 액션 타입 정의
-const INCREMENT = "INCREMENT";
-
-// 액션 생성 함수 정의
-export const increment = () => ({
-    type: INCREMENT
-});
+import * as ActionTypes from "../actions/UserActions"
 
 // 초기 상태 정의
 const initialState = {
-    number: 0
+    userList: '',
 } ;
 
 // 리듀서 작성
-export default function userReducers(state=initialState, action) {
-    switch(action.type) {
-        case INCREMENT:
-            return {
-                ...state,
-                number: state.number + 1 ,
-            } ;
+export default function userReducers(state = initialState, action) {
+    let copiedState = Object.assign({}, state);
 
+    switch (action.type) {
+        case ActionTypes.CHANGE_USER_LIST:
+            copiedState.userList = action.userList;
+            return copiedState;
+
+        // 끝.
         default:
-            return state ;
+            return state;
     }
 }
