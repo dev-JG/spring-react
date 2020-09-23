@@ -2,7 +2,10 @@ plugins {
     id 'org.springframework.boot' version '2.3.4.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id "com.moowork.node" version "1.3.1"
 }
+
+apply plugin: "com.moowork.node"
 
 group = 'com.jg.toy'
 version = '0.0.1-SNAPSHOT'
@@ -50,3 +53,18 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+def webappDir = "$projectDir/src/main/webapp/react-app"
+
+task appNpmInstall(type: NpmTask) {
+    workingDir = file("${webappDir}")
+    args = ["run", "build"]
+}
+
+task copyWebApp(type: Copy) {
+    from 'src/main/webapp/react-app/build'
+    into "build/resources/main/static"
+}
+
+copyWebApp.dependsOn(appNpmInstall)
+compileJava.dependsOn(copyWebApp)
