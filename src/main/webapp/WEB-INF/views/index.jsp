@@ -8,6 +8,6 @@
 </head>
 <body>
     <h1>Hello Spring Boot!</h1>
-    <%@ include file="/static/build/index.html" %>
+    <%@ include file="/react-app/build/index.html" %>
 </body>
 </html>

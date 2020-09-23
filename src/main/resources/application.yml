@@ -19,10 +19,10 @@ spring:
         use-server-prep-stmts: true
       connection-test-query: SELECT 1
 
-#  mvc:
-#    view:
-#      prefix: /WEB-INF/views/
-#      suffix: .jsp
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
